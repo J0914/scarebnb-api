@@ -3,17 +3,28 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Haunts extends Model {
+  class Haunt extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Haunt.belongsTo(
+        models.User,
+        { foreignKey: 'hostId' }
+      )
+      Haunt.hasMany(
+        models.Booking,
+        { foreignKey: 'hauntId', onDelete: 'CASCADE', hooks: true}
+      )
+      Haunt.hasMany(
+        models.Review,
+        { foreignKey: 'hauntId', onDelete: 'CASCADE', hooks: true}
+      )
     }
   }
-  Haunts.init({
+  Haunt.init({
     hostId: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -78,7 +89,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'Haunts',
+    modelName: 'Haunt',
   });
-  return Haunts;
+  return Haunt;
 };
