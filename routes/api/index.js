@@ -13,8 +13,22 @@ router.use('/session', sessionRouter);
 router.use('/users', usersRouter);
 router.use('/haunts', hauntsRouter);
 
-router.post('/test', (req, res) => {
-  res.json({ requestBody: req.body });
+router.get('/set-token-cookie', async (_req, res) => {
+  const user = await User.findOne({
+      where: {
+        username: 'Demo-lition'
+      }
+    });
+  setTokenCookie(res, user);
+  return res.json({ user: user });
+});
+
+router.get("/api/csrf/restore", (req, res) => {
+  const csrfToken = req.csrfToken();
+  res.cookie("XSRF-TOKEN", csrfToken);
+  res.status(200).json({
+    'XSRF-Token': csrfToken
+  });
 });
 
 module.exports = router;

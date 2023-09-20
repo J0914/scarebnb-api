@@ -94,6 +94,16 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Haunt',
+    defaultScope: {
+      attributes: {
+        exclude: ["createdAt", "updatedAt"]
+      }
+    },
+    scopes: {
+      allInfo: {
+        attributes: {}
+      }
+    }
   });
   return Haunt;
 };

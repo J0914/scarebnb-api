@@ -1,32 +1,173 @@
 const express = require('express')
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User, Haunt } = require('../../db/models');
+const { requireAuth } = require('../../utils/auth');
+const { Haunt } = require('../../db/models');
 
 
 const router = express.Router();
 
+const validateHaunt = [
+  check('hostId')
+    .exists({ checkFalsy: true })
+    .withMessage('Please provide a hostId.'),
+  check('title')
+    .exists({ checkFalsy: true })
+    .isLength({ min: 1, max: 50 })
+    .withMessage('Title must be between 1 and 50 characters.'),
+  check('description')
+    .exists({ checkFalsy: true })
+    .isLength({ min: 1, max: 5000 })
+    .withMessage('Description must be between 1 and 5000 characters.'),
+  check('street')
+    .exists({ checkFalsy: true })
+    .isLength({ min: 1, max: 50 })
+    .withMessage('Street must be between 1 and 50 characters.'),
+  check('city')
+    .exists({ checkFalsy: true })
+    .isLength({ min: 1, max: 30 })
+    .withMessage('City must be between 1 and 30 characters.'),
+  check('state')
+    .exists({ checkFalsy: true })
+    .isLength({ min: 1, max: 20 })
+    .withMessage('State must be between 1 and 30 characters.'),
+  check('zip_code')
+    .exists({ checkFalsy: true })
+    .isLength({ min: 5, max: 5 })
+    .withMessage('Zip code must be 5 numbers.')
+    .isNumeric()
+    .withMessage('Zip code must be 5 numbers.'),
+  check('max_guests')
+    .exists({ checkFalsy: true })
+    .isInt()
+    .withMessage('Max guests must be a number.'),
+  check('beds')
+    .exists({ checkFalsy: true })
+    .isInt()
+    .withMessage('Beds must be a number.'),
+  check('bedrooms')
+    .exists({ checkFalsy: true })
+    .isInt()
+    .withMessage('Bedrooms must be a number.'),
+  check('bathrooms')
+    .exists({ checkFalsy: true })
+    .isInt()
+    .withMessage('Bathrooms must be a number.'),
+  handleValidationErrors
+];
+
+// get all haunts
 router.get('/', async(req,res,next) => {
-  const haunts = Haunt.findAll();
-  console.log(haunts);
-  res.json(haunts);
+  try {
+    const haunts = await Haunt.findAll();
+    if (haunts) res.json(haunts);
+    else next({
+      message: "Haunts couldn't be found",
+      statusCode: 404
+    })
+  } catch (err) {
+    next(err)
+  }
 })
 
+// get single haunt
+router.get('/:hauntId', async(req,res,next) => {
+  try{
+    const haunt = await Haunt.findByPk(req.params.hauntId);
+    if (haunt) res.json(haunt);
+    else next({
+      message: `Haunt ${req.params.hauntId} couldn't be found`,
+      statusCode: 404
+    })
+  } catch(err) {
+    next(err);
+  }
+})
 
-// Dont forget to requireAuth for all non get routes!
+// create new haunt, require user to be logged in, send back the created haunt
+router.post('/', requireAuth, validateHaunt, async(req,res,next) => {
+  try {
+    const newHaunt = await Haunt.create({
+      hostId: req.body.hostId,
+      title: req.body.title,
+      description: req.body.description,
+      street: req.body.street, 
+      city: req.body.city,
+      state: req.body.state,
+      zip_code: req.body.zip_code,
+      max_guests: req.body.max_guests,
+      beds: req.body.beds,
+      bedrooms: req.body.bedrooms,
+      bathrooms: req.body.bathrooms
+    })
+    if (newHaunt) res.json(newHaunt);
+    else next({
+      message: "Haunt couldn't be created, please check your inputs",
+      statusCode: 409
+    })
+  } catch(err) {
+    next(err)
+  }
+})
 
+// update single haunt
+router.put('/:hauntId', requireAuth, async(req,res,next) => {
+  try{
+    let haunt = await Haunt.findByPk(req.params.hauntId);
+    if (haunt){
+      if (req.user.id !== haunt.hostId) next({
+        message: 'Boo! Sorry, you can only edit your own haunts.',
+        statusCode: 403 
+      })
 
+      haunt = await haunt.update({
+        hostId: req.body.hostId || haunt.id,
+        title: req.body.title || haunt.title,
+        description: req.body.description || haunt.description,
+        street: req.body.street || haunt.street, 
+        city: req.body.city || haunt.city,
+        state: req.body.state || haunt.state,
+        zip_code: req.body.zip_code || haunt.zip_code,
+        max_guests: req.body.max_guests || haunt.max_guests,
+        beds: req.body.beds || haunt.beds,
+        bedrooms: req.body.bedrooms || haunt.bedrooms,
+        bathrooms: req.body.bathrooms || haunt.bathrooms
+      })
+      res.json(haunt)
+    } else {
+      next({
+        message: `Haunt ${req.params.hauntId} couldn't be found`,
+        statusCode: 404
+      })
+    }
+  } catch(err) {
+    next(err)
+  }
+})
 
-
-
-
-
-
-
-
-
-
-
+// delete a haunt
+router.delete('/:hauntId', requireAuth, async(req,res,next) => {
+  try{
+    const haunt = await Haunt.findByPk(req.params.hauntId);
+    if (haunt){
+      if (req.user.id !== haunt.hostId) next({
+        message: 'Boo! Sorry, you can only delete your own haunts.',
+        statusCode: 403 
+      })
+      await haunt.destroy();
+      res.json({
+        "message": "Successfully deleted",
+        "statusCode": 200 
+      })
+    } else {
+      next({
+        "message": `Haunt ${req.params.hauntId} couldn't be found`,
+        "statusCode": 404
+      })
+    }
+  } catch(err) {
+    next(err)
+  }
+})
 
 module.exports = router;
