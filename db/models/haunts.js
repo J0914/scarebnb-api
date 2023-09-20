@@ -22,6 +22,10 @@ module.exports = (sequelize, DataTypes) => {
         models.Review,
         { foreignKey: 'hauntId', onDelete: 'CASCADE', hooks: true}
       )
+      Haunt.hasMany(
+        models.Favorite,
+        { foreignKey: 'hauntId', onDelete: 'CASCADE', hooks: true}
+      )
     }
   }
   Haunt.init({
