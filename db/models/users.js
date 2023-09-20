@@ -52,6 +52,10 @@ module.exports = (sequelize, DataTypes) => {
         models.Review,
         { foreignKey: 'userId', onDelete: 'CASCADE', hooks: true}
       )
+      User.hasMany(
+        models.Favorite,
+        { foreignKey: 'userId', onDelete: 'CASCADE', hooks: true}
+      )
     }
   };
   
