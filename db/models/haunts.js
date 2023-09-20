@@ -18,6 +18,10 @@ module.exports = (sequelize, DataTypes) => {
         models.Booking,
         { foreignKey: 'hauntId', onDelete: 'CASCADE', hooks: true}
       )
+      Haunt.hasMany(
+        models.Review,
+        { foreignKey: 'hauntId', onDelete: 'CASCADE', hooks: true}
+      )
     }
   }
   Haunt.init({
