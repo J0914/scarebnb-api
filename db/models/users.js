@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
     }
     static associate(models) {
       User.hasMany(
-        models.Haunts,
+        models.Haunt,
         { foreignKey: 'hostId', onDelete: 'CASCADE', hooks: true }
       )
       User.hasMany(
