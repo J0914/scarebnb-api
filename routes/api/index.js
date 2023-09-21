@@ -3,6 +3,7 @@ const sessionRouter = require('./session.js');
 const usersRouter = require('./users.js');
 const hauntsRouter = require('./haunts.js');
 const bookingsRouter = require('./bookings.js');
+const reviewsRouter = require('./reviews.js');
 const { restoreUser } = require("../../utils/auth.js");
 
 // Connect restoreUser middleware to the API router
@@ -14,6 +15,7 @@ router.use('/session', sessionRouter);
 router.use('/users', usersRouter);
 router.use('/haunts', hauntsRouter);
 router.use('/bookings', bookingsRouter);
+router.use('/reviews', reviewsRouter);
 
 // DELETE BEFORE FINAL DEPLOYMENT
 router.get('/set-token-cookie', async (_req, res) => {

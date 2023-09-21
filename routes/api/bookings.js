@@ -41,9 +41,10 @@ router.get('/', requireAuth, async(req,res,next) => {
         userId: req.user.id
       }
     })
-    if (bookings) {
+    if (bookings.length > 0) {
       if (req.user.id !== bookings[0].userId){
         next({
+          title: 'Forbidden',
           message: 'Boo! Sorry, you can only see your own bookings.',
           status: 403
         })
@@ -53,8 +54,9 @@ router.get('/', requireAuth, async(req,res,next) => {
     }
     else {
       next({
-          "message": `Bookings for user ${req.user.id} couldn't be found`,
-          "status": 404
+          title: 'Not Found',
+          message: `Bookings for user ${req.user.id} couldn't be found`,
+          status: 404
       })
     }
   } catch(err) {
@@ -70,6 +72,7 @@ router.get('/:bookingId', requireAuth, async(req,res,next) => {
     if (booking) {
       if (req.user.id !== booking.userId){
         next({
+          title: 'Forbidden',
           message: 'Boo! Sorry, you can only see your own bookings.',
           status: 403
         })
@@ -78,8 +81,9 @@ router.get('/:bookingId', requireAuth, async(req,res,next) => {
       }
     } else {
       next({
-        "message": `Booking ${req.params.bookingId} couldn't be found`,
-        "status": 404
+        title: 'Not Found',
+        message: `Booking ${req.params.bookingId} couldn't be found`,
+        status: 404
       })
     }
   } catch(err){
@@ -94,6 +98,7 @@ router.post('/:hauntId', requireAuth, validateBooking, async(req,res,next) => {
     const haunt = await Haunt.findByPk(req.params.hauntId);
     if (req.user.id === haunt.hostId) {
       next({
+        title: 'Forbidden',
         message: 'Boo! Sorry, you can\'t book your own Haunt.',
         status: 403
       })
@@ -124,6 +129,7 @@ router.post('/:hauntId', requireAuth, validateBooking, async(req,res,next) => {
         status: 403
       })
     }
+    
     // create new booking if everything else works out
     const newBooking = await Booking.create({
       "hauntId": req.params.hauntId,
@@ -136,8 +142,9 @@ router.post('/:hauntId', requireAuth, validateBooking, async(req,res,next) => {
     if (newBooking) res.json(newBooking);
     else {
       next({
-        "message": "Booking couldn't be created, please check your inputs",
-        "status": 409
+        title: "Could not be processed",
+        message: "Booking couldn't be created, please check your inputs",
+        status: 409
       })
     }
   } catch(err) {
@@ -157,6 +164,7 @@ router.delete('/:bookingId', requireAuth, async(req,res,next) => {
       })
     } else {
       next({
+        title: 'Not Found',
         message: `Booking ${req.params.bookingId} couldn't be found`,
         status: 404
       })

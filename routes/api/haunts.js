@@ -60,8 +60,9 @@ const validateHaunt = [
 router.get('/', async(req,res,next) => {
   try {
     const haunts = await Haunt.findAll();
-    if (haunts) res.json(haunts);
+    if (haunts.length > 0) res.json(haunts);
     else next({
+      title: 'Not Found',
       message: "Haunts couldn't be found",
       status: 404
     })
@@ -74,8 +75,10 @@ router.get('/', async(req,res,next) => {
 router.get('/:hauntId', async(req,res,next) => {
   try{
     const haunt = await Haunt.findByPk(req.params.hauntId);
+    console.log('HAUNT>>>>>>>>>>>>>>>>', haunt)
     if (haunt) res.json(haunt);
     else next({
+      title: 'Not Found',
       message: `Haunt ${req.params.hauntId} couldn't be found`,
       status: 404
     })
@@ -118,6 +121,7 @@ router.post('/', requireAuth, validateHaunt, async(req,res,next) => {
     })
     if (newHaunt) res.json(newHaunt);
     else next({
+      title: 'Could not be processed',
       message: "Haunt couldn't be created, please check your inputs",
       status: 409
     })
@@ -132,6 +136,7 @@ router.put('/:hauntId', requireAuth, async(req,res,next) => {
     let haunt = await Haunt.findByPk(req.params.hauntId);
     if (haunt){
       if (req.user.id !== haunt.hostId) next({
+        title: 'Forbidden',
         message: 'Boo! Sorry, you can only edit your own haunts.',
         status: 403 
       })
@@ -152,6 +157,7 @@ router.put('/:hauntId', requireAuth, async(req,res,next) => {
       res.json(haunt)
     } else {
       next({
+        title: 'Not Found',
         message: `Haunt ${req.params.hauntId} couldn't be found`,
         status: 404
       })
@@ -167,18 +173,20 @@ router.delete('/:hauntId', requireAuth, async(req,res,next) => {
     const haunt = await Haunt.findByPk(req.params.hauntId);
     if (haunt){
       if (req.user.id !== haunt.hostId) next({
+        title: 'Forbidden',
         message: 'Boo! Sorry, you can only delete your own haunts.',
         status: 403 
       })
       await haunt.destroy();
       res.json({
-        "message": "Successfully deleted",
-        "status": 200 
+        message: "Successful",
+        status: 200 
       })
     } else {
       next({
-        "message": `Haunt ${req.params.hauntId} couldn't be found`,
-        "status": 404
+        title: 'Not Found',
+        message: `Haunt ${req.params.hauntId} couldn't be found`,
+        status: 404
       })
     }
   } catch(err) {
