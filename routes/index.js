@@ -3,6 +3,8 @@ const router = express.Router();
 
 const apiRouter = require('./api');
 
+router.use('/api', apiRouter);
+
 // Add a XSRF-TOKEN cookie in development
 if (process.env.NODE_ENV !== 'production') {
   router.get('/api/csrf/restore', (req, res) => {
@@ -10,8 +12,6 @@ if (process.env.NODE_ENV !== 'production') {
     return res.json({});
   });
 }
-
-router.use('/api', apiRouter);
 
 // Static routes
 // Serve React build files in production
