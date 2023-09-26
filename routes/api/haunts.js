@@ -2,7 +2,7 @@ const express = require('express')
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
-const { Haunt } = require('../../db/models');
+const { Haunt, Review, User } = require('../../db/models');
 
 
 const router = express.Router();
@@ -57,9 +57,24 @@ const validateHaunt = [
 ];
 
 // get all haunts
-router.get('/', async(req,res,next) => {
+router.get('/', async (req, res, next) => {
   try {
-    const haunts = await Haunt.findAll();
+    const haunts = await Haunt.findAll({
+      include: [
+        {
+          model: Review,
+          attributes: ['body', 'updatedAt'],
+          required: true,
+          include: {
+            model: User,
+            attributes: ['first_name']
+          }
+        },
+        {
+          model: User,
+          attributes: ['first_name'],
+        }]
+    });
     if (haunts.length > 0) res.json(haunts);
     else next({
       title: 'Not Found',
@@ -72,8 +87,8 @@ router.get('/', async(req,res,next) => {
 })
 
 // get single haunt
-router.get('/:hauntId', async(req,res,next) => {
-  try{
+router.get('/:hauntId', async (req, res, next) => {
+  try {
     const haunt = await Haunt.findByPk(req.params.hauntId);
     console.log('HAUNT>>>>>>>>>>>>>>>>', haunt)
     if (haunt) res.json(haunt);
@@ -82,13 +97,13 @@ router.get('/:hauntId', async(req,res,next) => {
       message: `Haunt ${req.params.hauntId} couldn't be found`,
       status: 404
     })
-  } catch(err) {
+  } catch (err) {
     next(err);
   }
 })
 
 // create new haunt, require user to be logged in, send back the created haunt
-router.post('/', requireAuth, validateHaunt, async(req,res,next) => {
+router.post('/', requireAuth, validateHaunt, async (req, res, next) => {
   try {
     // check if there is already a listing at this street address
     const alreadyCreated = Haunt.findAll({
@@ -98,7 +113,7 @@ router.post('/', requireAuth, validateHaunt, async(req,res,next) => {
       }
     })
 
-    if (alreadyCreated.length > 0){
+    if (alreadyCreated.length > 0) {
       next({
         title: 'Forbidden',
         message: 'A haunt already exists at this street address.',
@@ -110,7 +125,7 @@ router.post('/', requireAuth, validateHaunt, async(req,res,next) => {
       hostId: req.user.id,
       title: req.body.title,
       description: req.body.description,
-      street: req.body.street, 
+      street: req.body.street,
       city: req.body.city,
       state: req.body.state,
       zip_code: req.body.zip_code,
@@ -125,27 +140,27 @@ router.post('/', requireAuth, validateHaunt, async(req,res,next) => {
       message: "Haunt couldn't be created, please check your inputs",
       status: 409
     })
-  } catch(err) {
+  } catch (err) {
     next(err)
   }
 })
 
 // update single haunt
-router.put('/:hauntId', requireAuth, async(req,res,next) => {
-  try{
+router.put('/:hauntId', requireAuth, async (req, res, next) => {
+  try {
     let haunt = await Haunt.findByPk(req.params.hauntId);
-    if (haunt){
+    if (haunt) {
       if (req.user.id !== haunt.hostId) next({
         title: 'Forbidden',
         message: 'Boo! Sorry, you can only edit your own haunts.',
-        status: 403 
+        status: 403
       })
 
       haunt = await haunt.update({
         hostId: req.body.hostId || haunt.id,
         title: req.body.title || haunt.title,
         description: req.body.description || haunt.description,
-        street: req.body.street || haunt.street, 
+        street: req.body.street || haunt.street,
         city: req.body.city || haunt.city,
         state: req.body.state || haunt.state,
         zip_code: req.body.zip_code || haunt.zip_code,
@@ -162,25 +177,25 @@ router.put('/:hauntId', requireAuth, async(req,res,next) => {
         status: 404
       })
     }
-  } catch(err) {
+  } catch (err) {
     next(err)
   }
 })
 
 // delete a haunt
-router.delete('/:hauntId', requireAuth, async(req,res,next) => {
-  try{
+router.delete('/:hauntId', requireAuth, async (req, res, next) => {
+  try {
     const haunt = await Haunt.findByPk(req.params.hauntId);
-    if (haunt){
+    if (haunt) {
       if (req.user.id !== haunt.hostId) next({
         title: 'Forbidden',
         message: 'Boo! Sorry, you can only delete your own haunts.',
-        status: 403 
+        status: 403
       })
       await haunt.destroy();
       res.json({
         message: "Successful",
-        status: 200 
+        status: 200
       })
     } else {
       next({
@@ -189,7 +204,7 @@ router.delete('/:hauntId', requireAuth, async(req,res,next) => {
         status: 404
       })
     }
-  } catch(err) {
+  } catch (err) {
     next(err)
   }
 })
