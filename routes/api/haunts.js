@@ -63,7 +63,7 @@ router.get('/', async (req, res, next) => {
       include: [
         {
           model: Review,
-          attributes: ['body', 'updatedAt'],
+          attributes: ['id', 'body', 'updatedAt'],
           required: true,
           include: {
             model: User,
