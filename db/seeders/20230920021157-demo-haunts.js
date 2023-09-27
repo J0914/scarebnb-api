@@ -15,7 +15,8 @@ module.exports = {
         max_guests: 5,
         beds: 3,
         bedrooms: 3,
-        bathrooms: 1
+        bathrooms: 1,
+        price: 123.00
       },
       {
         hostId: 2,
@@ -28,7 +29,8 @@ module.exports = {
         max_guests: 10,
         beds: 5,
         bedrooms: 5,
-        bathrooms: 3
+        bathrooms: 3,
+        price: 321.00
       },
       {
         hostId: 3,
@@ -41,7 +43,8 @@ module.exports = {
         max_guests: 2,
         beds: 1,
         bedrooms: 1,
-        bathrooms: 1
+        bathrooms: 1,
+        price: 213.00
       },
       {
         hostId: 1,
@@ -54,7 +57,8 @@ module.exports = {
         max_guests: 5,
         beds: 3,
         bedrooms: 3,
-        bathrooms: 3
+        bathrooms: 3,
+        price: 231.00
       },
       {
         hostId: 2,
@@ -67,7 +71,8 @@ module.exports = {
         max_guests: 4,
         beds: 2,
         bedrooms: 2,
-        bathrooms: 2
+        bathrooms: 2,
+        price: 132.00
       },
       {
         hostId: 3,
@@ -80,7 +85,8 @@ module.exports = {
         max_guests: 6,
         beds: 4,
         bedrooms: 3,
-        bathrooms: 2
+        bathrooms: 2,
+        price: 312.00
       },
       {
         hostId: 1,
@@ -93,7 +99,8 @@ module.exports = {
         max_guests: 4,
         beds: 2,
         bedrooms: 2,
-        bathrooms: 2
+        bathrooms: 2,
+        price: 456.00
       },
       {
         hostId: 2,
@@ -106,7 +113,8 @@ module.exports = {
         max_guests: 5,
         beds: 3,
         bedrooms: 2,
-        bathrooms: 1
+        bathrooms: 1,
+        price: 465.00
       },
       {
         hostId: 3,
@@ -119,7 +127,8 @@ module.exports = {
         max_guests: 15,
         beds: 10,
         bedrooms: 7,
-        bathrooms: 5
+        bathrooms: 5,
+        price: 654.00
       },
       {
         hostId: 1,
@@ -132,7 +141,8 @@ module.exports = {
         max_guests: 10,
         beds: 4,
         bedrooms: 3,
-        bathrooms: 2
+        bathrooms: 2,
+        price: 645.00
       }
     ], {});
   },

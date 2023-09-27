@@ -53,6 +53,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
+      price: {
+        type: Sequelize.FLOAT(6,2),
+        allowNull: false
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
