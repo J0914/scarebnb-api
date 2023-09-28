@@ -66,8 +66,10 @@ const validateHaunt = [
   check('price')
     .exists({ checkFalsy: true })
     .withMessage('Please include a price.')
-    .isInt()
-    .withMessage('Price must be a number.'),
+    .isInt({
+      min: 1
+    })
+    .withMessage('You cannot list a haunt for free.'),
   handleValidationErrors
 ];
 
