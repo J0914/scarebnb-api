@@ -16,6 +16,8 @@ const app = express();
 app.use(morgan('dev'));
 // middleware for parsing cookies
 app.use(cookieParser());
+// required for aws 
+app.use(express.urlencoded({ extended: false }));
 // middlware for parsing json bodies of content-type 'application/json'
 app.use(express.json());
 // Security Middleware
