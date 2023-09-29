@@ -23,6 +23,10 @@ module.exports = (sequelize, DataTypes) => {
         { foreignKey: 'hauntId', onDelete: 'CASCADE', hooks: true}
       )
       Haunt.hasMany(
+        models.Image,
+        { foreignKey: 'hauntId', onDelete: 'CASCADE', hooks: true}
+      )
+      Haunt.hasMany(
         models.Favorite,
         { foreignKey: 'hauntId', onDelete: 'CASCADE', hooks: true}
       )

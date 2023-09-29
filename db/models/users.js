@@ -56,6 +56,10 @@ module.exports = (sequelize, DataTypes) => {
         models.Favorite,
         { foreignKey: 'userId', onDelete: 'CASCADE', hooks: true}
       )
+      User.hasOne(
+        models.Image,
+        { foreignKey: 'userId', onDelete: 'CASCADE', hooks: true}
+      )
     }
   };
   

@@ -5,6 +5,7 @@ const hauntsRouter = require('./haunts.js');
 const bookingsRouter = require('./bookings.js');
 const reviewsRouter = require('./reviews.js');
 const favoritesRouter = require('./favorites.js');
+const imagesRouter = require('./images.js')
 const { restoreUser } = require("../../utils/auth.js");
 
 // Connect restoreUser middleware to the API router
@@ -18,6 +19,7 @@ router.use('/haunts', hauntsRouter);
 router.use('/bookings', bookingsRouter);
 router.use('/reviews', reviewsRouter);
 router.use('/favorites', favoritesRouter);
+router.use('/images', imagesRouter);
 
 const isProduction = process.env.NODE_ENV === "production";
 

@@ -12,11 +12,14 @@ module.exports = {
       url: {
         type: Sequelize.BLOB,
         allowNull: false,
-        unique: true
       },
       hauntId: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: true
+      },
+      userId: {
+        type: Sequelize.INTEGER,
+        allowNull: true
       },
       createdAt: {
         allowNull: false,

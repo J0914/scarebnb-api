@@ -90,6 +90,10 @@ router.get('/', async (req, res, next) => {
         {
           model: User,
           attributes: ['first_name'],
+        },{
+          model: Image,
+          required: true,
+          attributes: ['id', 'url', 'hauntId']
         }]
     });
     if (haunts.length > 0) res.json(haunts);

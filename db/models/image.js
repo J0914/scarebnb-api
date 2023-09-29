@@ -10,18 +10,28 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Image.belongsTo(
+        models.Haunt,
+        { foreignKey: 'hauntId' }
+      )
+      Image.belongsTo(
+        models.User,
+        {foreignKey: 'userId'}
+      )
     }
   }
   Image.init({
     url: {
       type: DataTypes.BLOB,
       allowNull: false,
-      unique: true
     },
     hauntId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
     }
   }, {
     sequelize,
