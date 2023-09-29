@@ -3,7 +3,7 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
 const { Haunt, Image, User } = require('../../db/models');
-import { singlePublicFileUpload, singleMulterUpload, multipleMulterUpload, multiplePublicFileUpload } from '../../awsS3'
+const { singlePublicFileUpload, singleMulterUpload, multipleMulterUpload, multiplePublicFileUpload } = require('../../awsS3') 
 
 const router = express.Router();
 
@@ -28,7 +28,7 @@ router.post('/single', singleMulterUpload("image"), async (req, res, next) => {
   }
 })
 
-router.post('/multiple/:hauntId', multipleMulterUploadMulterUpload("images"), async (req, res, next) => {
+router.post('/multiple/:hauntId', multipleMulterUpload("images"), async (req, res, next) => {
   try {
     const images = await multiplePrivateFileUpload(req.body.images);
     const newImages = images.map(async image => {
