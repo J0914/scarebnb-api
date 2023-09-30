@@ -7,277 +7,277 @@ module.exports = {
       {
         "hauntId": 1,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/house1.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/house1.jpg'
       },
       {
         "hauntId": 1,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior 11.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior+11.jpg'
       },
       {
         "hauntId": 1,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior1.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior1.jpg'
       },
       {
         "hauntId": 1,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior14.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior10.jpg'
       },
       {
         "hauntId": 1,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior2.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior11.jpg'
       },
       {
         "hauntId": 2,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/house10.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/house10.jpg'
       },
       {
         "hauntId": 2,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior9.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior12.jpg'
       },
       {
         "hauntId": 2,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior6.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior13.jpg'
       },
       {
         "hauntId": 2,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior4.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior14.jpg'
       },
       {
         "hauntId": 2,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior20.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior15.jpg'
       },
       {
         "hauntId": 3,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/house2.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/house2.jpg'
       },
       {
         "hauntId": 3,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior12.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior16.jpg'
       },
       {
         "hauntId": 3,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior15.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior17.jpg'
       },
       {
         "hauntId": 3,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior13.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior18.jpg'
       },
       {
         "hauntId": 3,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior3.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior19.jpg'
       },
       {
         "hauntId": 3,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior5.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior2.jpg'
       },
       {
         "hauntId": 3,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior18.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior20.jpg'
       },
       {
         "hauntId": 4,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/house3.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/house3.jpg'
       },
       {
         "hauntId": 4,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior7.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior3.jpg'
       },
       {
         "hauntId": 4,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior6.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior4.jpeg'
       },
       {
         "hauntId": 4,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior16.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior4.jpg'
       },
       {
         "hauntId": 4,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior15.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior5.jpg'
       },
       {
         "hauntId": 4,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior3.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior6.jpg'
       },
       {
         "hauntId": 4,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior4.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior7.jpg'
       },
       {
         "hauntId": 5,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/house4.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/house4.jpg'
       },
       {
         "hauntId": 5,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior18.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior9.jpg'
       },
       {
         "hauntId": 5,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior1.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior8.jpg'
       },
       {
         "hauntId": 5,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior11.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior6.jpg'
       },
       {
         "hauntId": 5,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior14.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior4.jpg'
       },
       {
         "hauntId": 6,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/house5.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/house5.jpg'
       },
       {
         "hauntId": 6,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior9.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior3.jpg'
       },
       {
         "hauntId": 6,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior8.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior2.jpg'
       },
       {
         "hauntId": 6,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior6.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior14.jpg'
       },
       {
         "hauntId": 6,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior20.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior16.jpg'
       },
       {
         "hauntId": 7,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/house6.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/house6.jpg'
       },
       {
         "hauntId": 7,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior19.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior14.jpg'
       },
       {
         "hauntId": 7,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior13.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior12.jpg'
       },
       {
         "hauntId": 7,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior16.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior10.jpg'
       },
       {
         "hauntId": 7,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior18.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior+11.jpg'
       },
       {
         "hauntId": 8,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/house9.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/house9.jpg'
       },
       {
         "hauntId": 8,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior12.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior+11.jpg'
       },
       {
         "hauntId": 8,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior1.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior10.jpg'
       },
       {
         "hauntId": 8,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior2.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior12.jpg'
       },
       {
         "hauntId": 8,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior12.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior14.jpg'
       },
       {
         "hauntId": 8,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior8.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior16.jpg'
       },
       {
         "hauntId": 9,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/house7.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/house7.jpg'
       },
       {
         "hauntId": 9,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior7.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior18.jpg'
       },
       {
         "hauntId": 9,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior5.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior2.jpg'
       },
       {
         "hauntId": 9,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior3.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior3.jpg'
       },
       {
         "hauntId": 9,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior2.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior4.jpg'
       },
       {
         "hauntId": 10,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/house8.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/house8.jpg'
       },
       {
         "hauntId": 10,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior1.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior8.jpg'
       },
       {
         "hauntId": 10,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior11.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior6.jpg'
       },
       {
         "hauntId": 10,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior17.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior9.jpg'
       },
       {
         "hauntId": 10,
         "userId": null,
-        "url": 's3://scarebnbprojectimages/interior15.jpg'
+        "url": 'https://scarebnbprojectimages.s3.us-west-2.amazonaws.com/interior7.jpg'
       },
 
     ], {});
