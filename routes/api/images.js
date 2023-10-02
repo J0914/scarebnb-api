@@ -2,17 +2,17 @@ const express = require('express')
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
-const { Haunt, Image, User } = require('../../db/models');
-const { singlePublicFileUpload, singleMulterUpload, multipleMulterUpload, multiplePublicFileUpload } = require('../../awsS3') 
+const { Image } = require('../../db/models');
+const { singlePublicFileUpload, singleMulterUpload, multipleMulterUpload, multiplePrivateFileUpload } = require('../../awsS3') 
 
 const router = express.Router();
 
-router.post('/single', singleMulterUpload("image"), async (req, res, next) => {
+// upload a profile picture
+router.post('/profile', requireAuth, async (req, res, next) => {
   try {
-    const profileImageUrl = await singlePublicFileUpload(req.image);
     const newImage = await Image.create({
       userId: req.user.id,
-      url: profileImageUrl,
+      url: req.body.url,
       hauntId: null
     })
     if (newImage) {
@@ -28,18 +28,38 @@ router.post('/single', singleMulterUpload("image"), async (req, res, next) => {
   }
 })
 
-router.post('/multiple/:hauntId', multipleMulterUpload("images"), async (req, res, next) => {
+// upload haunt images
+router.post('/multiple/:hauntId', requireAuth, async (req, res, next) => {
   try {
-    const images = await multiplePrivateFileUpload(req.body.images);
     const newImages = images.map(async image => {
       return await Image.create({
         userId: null,
-        url: image,
+        url: image.url,
         hauntId: req.params.hauntId
       })
     })
     if (newImages) {
-      return res.json(newImages);
+      const haunt = Haunt.findByPk(req.params.hauntId, {
+        include: [
+          {
+            model: Review,
+            attributes: ['id', 'body', 'updatedAt'],
+            required: true,
+            include: {
+              model: User,
+              attributes: ['first_name']
+            }
+          },
+          {
+            model: User,
+            attributes: ['first_name'],
+          },{
+            model: Image,
+            required: true,
+            attributes: ['id', 'url', 'hauntId']
+          }]
+      })
+      return res.json(haunt);
     } else {
       next({
         message: 'Images couldn\'t be created.',
@@ -51,7 +71,7 @@ router.post('/multiple/:hauntId', multipleMulterUpload("images"), async (req, re
   }
 })
 
-router.delete('/:imageId', async(req,res,next) => {
+router.delete('/:imageId', requireAuth, async(req,res,next) => {
   try{
     const image = Image.findByPk(req.params.imageId);
     if(image){

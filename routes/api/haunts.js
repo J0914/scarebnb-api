@@ -8,9 +8,6 @@ const { Haunt, Review, Image, User } = require('../../db/models');
 const router = express.Router();
 
 const validateHaunt = [
-  check('hostId')
-    .exists({ checkFalsy: true })
-    .withMessage('Please provide a hostId.'),
   check('title')
     .exists({ checkFalsy: true })
     .withMessage('Please give your haunt a title.')
@@ -65,11 +62,11 @@ const validateHaunt = [
     .withMessage('Bathrooms must be a number.'),
   check('price')
     .exists({ checkFalsy: true })
-    .withMessage('Please include a price.')
-    .isInt({
-      min: 1
-    })
-    .withMessage('You cannot list a haunt for free.'),
+    .withMessage('Please include a price.'),
+    // .isInt({
+    //   min: 1
+    // })
+    // .withMessage('You cannot list a haunt for free.'),
   handleValidationErrors
 ];
 
@@ -110,7 +107,26 @@ router.get('/', async (req, res, next) => {
 // get single haunt
 router.get('/:hauntId', async (req, res, next) => {
   try {
-    const haunt = await Haunt.findByPk(req.params.hauntId);
+    const haunt = await Haunt.findByPk(req.params.hauntId, {
+      include: [
+        {
+          model: Review,
+          attributes: ['id', 'body', 'updatedAt'],
+          required: true,
+          include: {
+            model: User,
+            attributes: ['first_name']
+          }
+        },
+        {
+          model: User,
+          attributes: ['first_name'],
+        },{
+          model: Image,
+          required: true,
+          attributes: ['id', 'url', 'hauntId']
+        }]
+    });
     console.log('HAUNT>>>>>>>>>>>>>>>>', haunt)
     if (haunt) res.json(haunt);
     else next({

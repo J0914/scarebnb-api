@@ -14,6 +14,7 @@ const s3 = new AWS.S3({ apiVersion: "2006-03-01" });
 // --------------------------- Public UPLOAD ------------------------
 
 const singlePublicFileUpload = async (file) => {
+  console.log('THE FILE', file)
   const { originalname, mimetype, buffer } = await file;
   const path = require("path");
   // name of the file in your S3 bucket will be the date in ms plus the extension name
@@ -79,7 +80,7 @@ const retrievePrivateFile = (key) => {
 
 const storage = multer.memoryStorage({
   destination: function (req, file, callback) {
-    callback(null, "");
+    callback(null, '');
   },
 });
 
