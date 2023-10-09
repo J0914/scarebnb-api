@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Image.init({
     url: {
-      type: DataTypes.BLOB,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     hauntId: {

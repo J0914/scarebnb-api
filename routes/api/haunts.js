@@ -78,7 +78,6 @@ router.get('/', async (req, res, next) => {
         {
           model: Review,
           attributes: ['id', 'body', 'updatedAt'],
-          required: true,
           include: {
             model: User,
             attributes: ['first_name']
@@ -87,6 +86,7 @@ router.get('/', async (req, res, next) => {
         {
           model: User,
           attributes: ['first_name'],
+          required: true,
         },{
           model: Image,
           required: true,
@@ -112,7 +112,6 @@ router.get('/:hauntId', async (req, res, next) => {
         {
           model: Review,
           attributes: ['id', 'body', 'updatedAt'],
-          required: true,
           include: {
             model: User,
             attributes: ['first_name']
@@ -121,13 +120,14 @@ router.get('/:hauntId', async (req, res, next) => {
         {
           model: User,
           attributes: ['first_name'],
+          required: true,
         },{
           model: Image,
           required: true,
           attributes: ['id', 'url', 'hauntId']
         }]
     });
-    console.log('HAUNT>>>>>>>>>>>>>>>>', haunt)
+    console.log('THE HAUNT IS >>>>>', haunt)
     if (haunt) res.json(haunt);
     else next({
       title: 'Not Found',
@@ -139,7 +139,7 @@ router.get('/:hauntId', async (req, res, next) => {
   }
 })
 
-// create new haunt, require user to be logged in, send back the created haunt
+// create new haunt, require user to be logged in, redirect to create images
 router.post('/', requireAuth, validateHaunt, async (req, res, next) => {
   try {
     // check if there is already a listing at this street address
@@ -172,7 +172,7 @@ router.post('/', requireAuth, validateHaunt, async (req, res, next) => {
       bathrooms: req.body.bathrooms,
       price: req.body.price
     })
-    if (newHaunt) res.json(newHaunt);
+    if (newHaunt) res.redirect(307, `/api/images/multiple/${newHaunt.id}`);
     else next({
       title: 'Could not be processed',
       message: "Haunt couldn't be created, please check your inputs",
