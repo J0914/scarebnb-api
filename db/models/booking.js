@@ -54,12 +54,6 @@ module.exports = (sequelize, DataTypes) => {
     num_guests: {
       type: DataTypes.INTEGER,
       allowNull: false
-    },
-    message: {
-      type: DataTypes.TEXT,
-      validate: {
-        len: [0, 500]
-      }
     }
   }, {
     sequelize,

@@ -29,9 +29,6 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      message: {
-        type: Sequelize.TEXT
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
