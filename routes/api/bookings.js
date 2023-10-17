@@ -33,10 +33,24 @@ const validateBooking = [
   handleValidationErrors
 ]
 
+// get all bookings for current haunt
+router.get('/haunt/:hauntId', async(req,res,next) => {
+  const bookings = await Booking.findAll({
+    where: {
+      hauntId: req.params.hauntId
+    },
+    attributes: ['id', 'check_in', 'check_out'] 
+  })
+
+ res.json(bookings);
+  
+})
+
 // get all bookings for current user
 router.get('/', requireAuth, async(req,res,next) => {
   try {
     const bookings = await Booking.findAll({
+      
       where: {
         userId: req.user.id
       }
@@ -137,7 +151,6 @@ router.post('/:hauntId', requireAuth, validateBooking, async(req,res,next) => {
       "check_in": req.body.check_in,
       "check_out": req.body.check_out,
       "num_guests": req.body.num_guests,
-      "message": req.body.message
     })
     if (newBooking) res.json(newBooking);
     else {
