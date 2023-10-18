@@ -50,10 +50,12 @@ router.get('/haunt/:hauntId', async(req,res,next) => {
 router.get('/', requireAuth, async(req,res,next) => {
   try {
     const bookings = await Booking.findAll({
-      
       where: {
         userId: req.user.id
-      }
+      },
+      order: [
+        ['check_in', 'ASC']
+      ]
     })
     if (bookings.length > 0) {
       if (req.user.id !== bookings[0].userId){
