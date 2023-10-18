@@ -11,7 +11,7 @@ const validateBooking = [
   check('check_in')
     .exists({ checkFalsy: true })
     .custom((value) => {
-      if(new Date(value) <= new Date()) {
+      if(new Date(value) < new Date()) {
           throw new Error ('Check-in cannot be in the past.');
       }
       return true;
