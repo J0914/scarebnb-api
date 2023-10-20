@@ -40,7 +40,6 @@ router.post('/multiple/:hauntId', requireAuth, async (req, res, next) => {
       })
     })
     if (newImages) {
-      console.log('NEW IMAGES ARE', newImages)
       res.redirect(`/api/haunts/${req.params.hauntId}`)
     } else {
       next({

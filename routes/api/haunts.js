@@ -80,12 +80,12 @@ router.get('/', async (req, res, next) => {
           attributes: ['id', 'body', 'updatedAt'],
           include: {
             model: User,
-            attributes: ['first_name']
+            attributes: ['id', 'first_name']
           }
         },
         {
           model: User,
-          attributes: ['first_name'],
+          attributes: ['id', 'first_name'],
           required: true,
         },{
           model: Image,
@@ -114,7 +114,7 @@ router.get('/:hauntId', async (req, res, next) => {
           attributes: ['id', 'body', 'updatedAt'],
           include: {
             model: User,
-            attributes: ['first_name']
+            attributes: ['id', 'first_name']
           }
         },
         {
@@ -127,7 +127,6 @@ router.get('/:hauntId', async (req, res, next) => {
           attributes: ['id', 'url', 'hauntId']
         }]
     });
-    console.log('THE HAUNT IS >>>>>', haunt)
     if (haunt) res.json(haunt);
     else next({
       title: 'Not Found',

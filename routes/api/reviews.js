@@ -40,7 +40,7 @@ router.get('/:hauntId', async(req,res,next) => {
 router.post('/:hauntId', requireAuth, validateReview, async(req,res,next) => {
   try {
     // check to see if this user has a booking with a checkout date prior to now
-    const booking = Booking.findOne({
+    const booking = await Booking.findOne({
       where: {
         userId: req.user.id,
         check_out: {
@@ -49,19 +49,19 @@ router.post('/:hauntId', requireAuth, validateReview, async(req,res,next) => {
       }
     })
     // check if this user has already left a review
-    const review = Review.findOne({
+    const review = await Review.findOne({
       where: {
         userId: req.user.id,
         hauntId: req.params.hauntId
       }
     })
     if (booking && !review){
-      const newReview = Review.create({
+      const newReview = await Review.create({
         hauntId: req.params.hauntId,
         userId: req.user.id,
         body: req.body.body
       })
-      if (newReview) res.json(newReview);
+      if (newReview) res.redirect(303, `/api/haunts/${req.params.hauntId}`);
       else next({
         title: 'Could not be processed',
         message: "Review couldn't be created, please check your inputs",
@@ -82,7 +82,7 @@ router.post('/:hauntId', requireAuth, validateReview, async(req,res,next) => {
 // edit a review owned by this user
 router.put('/:reviewId', requireAuth, validateReview, async(req,res,next) => {
   try{
-    const review = Review.findByPk(req.params.reviewId);
+    const review = await Review.findByPk(req.params.reviewId);
     if (review){
       if (req.user.id !== review.userId){
         next({
@@ -91,12 +91,12 @@ router.put('/:reviewId', requireAuth, validateReview, async(req,res,next) => {
           status: 403
         })
       }
-      const updatedReview = review.update({
-        hauntId: req.params.hauntId,
+      const updatedReview = await review.update({
+        hauntId: review.hauntId,
         userId: req.user.id,
         body: req.body.body || review.body
       })
-      if (updatedReview) res.json(updatedReview);
+      if (updatedReview) res.redirect(303, `/api/haunts/${updatedReview.hauntId}`);
       else next({
         title: "Could not be processed",
         message: "Review couldn't be edited, please check your inputs",
@@ -119,12 +119,11 @@ router.delete('/:reviewId', requireAuth, async(req,res,next) => {
   try{
     const review = await Review.findByPk(req.params.reviewId)
     if (review){
+      const hauntId = review.hauntId;
+      console.log('comparison>>>>>>', req.user.id, review.userId)
       if (req.user.id === review.userId){
         await review.destroy()
-        res.json({
-          message: "Successful",
-          status: 200 
-        })
+        res.redirect(303, `/api/haunts/${hauntId}`);
       } else {
         next({
           title: 'Forbidden',
