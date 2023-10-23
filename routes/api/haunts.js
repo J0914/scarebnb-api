@@ -115,7 +115,10 @@ router.get('/:hauntId', async (req, res, next) => {
           include: {
             model: User,
             attributes: ['id', 'first_name']
-          }
+          },
+          order: [
+            ['updatedAt', 'DESC']
+          ]
         },
         {
           model: User,
