@@ -2,7 +2,7 @@ const express = require('express')
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
-const { Review, Booking } = require('../../db/models');
+const { Review, Booking, User } = require('../../db/models');
 const { Op } = require('sequelize')
 
 const router = express.Router();
@@ -12,32 +12,40 @@ const validateReview = [
     .exists({ checkFalsy: true })
     .isLength({ min: 1, max: 5000 })
     .withMessage('You must include something in the body of your review.'),
-    handleValidationErrors
+  handleValidationErrors
 ]
 
-// get all reviews for haunt
-router.get('/:hauntId', async(req,res,next) => {
-  try{
+// get all reviews for user
+router.get('/:userId', async (req, res, next) => {
+  try {
     const reviews = await Review.findAll({
       where: {
-        hauntId: req.params.hauntId
-      }
+        userId: req.params.userId
+      },
+      attributes: ['id', 'body', 'hauntId', 'updatedAt'],
+      include: {
+        model: User,
+        attributes: ['id', 'first_name']
+      },
+      order: [
+        ['updatedAt', 'DESC']
+      ]
     })
     if (reviews.length > 0) res.json(reviews)
     else {
       next({
         title: 'Not Found',
-        message: `Reviews for Haunt ${req.params.hauntId} couldn't be found`,
+        message: `Reviews for User ${req.params.hauntId} couldn't be found`,
         status: 404
       })
     }
-  } catch(err) {
+  } catch (err) {
     next(err);
   }
 })
 
 // create a new review for specific haunt
-router.post('/:hauntId', requireAuth, validateReview, async(req,res,next) => {
+router.post('/:hauntId', requireAuth, validateReview, async (req, res, next) => {
   try {
     // check to see if this user has a booking with a checkout date prior to now
     const booking = await Booking.findOne({
@@ -55,13 +63,13 @@ router.post('/:hauntId', requireAuth, validateReview, async(req,res,next) => {
         hauntId: req.params.hauntId
       }
     })
-    if (booking && !review){
+    if (booking && !review) {
       const newReview = await Review.create({
         hauntId: req.params.hauntId,
         userId: req.user.id,
         body: req.body.body
       })
-      if (newReview) res.redirect(303, `/api/haunts/${req.params.hauntId}`);
+      if (newReview) res.json(newReview)
       else next({
         title: 'Could not be processed',
         message: "Review couldn't be created, please check your inputs",
@@ -74,17 +82,17 @@ router.post('/:hauntId', requireAuth, validateReview, async(req,res,next) => {
         status: 403
       })
     }
-  } catch(err) {
+  } catch (err) {
     next(err);
   }
 })
 
 // edit a review owned by this user
-router.put('/:reviewId', requireAuth, validateReview, async(req,res,next) => {
-  try{
+router.put('/:reviewId', requireAuth, validateReview, async (req, res, next) => {
+  try {
     const review = await Review.findByPk(req.params.reviewId);
-    if (review){
-      if (req.user.id !== review.userId){
+    if (review) {
+      if (req.user.id !== review.userId) {
         next({
           title: 'Forbidden',
           message: 'Boo! Sorry you can\'t edit reviews that don\'t belong to you',
@@ -96,7 +104,7 @@ router.put('/:reviewId', requireAuth, validateReview, async(req,res,next) => {
         userId: req.user.id,
         body: req.body.body || review.body
       })
-      if (updatedReview) res.redirect(303, `/api/haunts/${updatedReview.hauntId}`);
+      if (updatedReview) res.json(updatedReview)
       else next({
         title: "Could not be processed",
         message: "Review couldn't be edited, please check your inputs",
@@ -109,21 +117,21 @@ router.put('/:reviewId', requireAuth, validateReview, async(req,res,next) => {
         status: 404
       })
     }
-  } catch(err) {
+  } catch (err) {
     next(err)
   }
 })
 
 // delete a review owned by this user
-router.delete('/:reviewId', requireAuth, async(req,res,next) => {
-  try{
+router.delete('/:reviewId', requireAuth, async (req, res, next) => {
+  try {
     const review = await Review.findByPk(req.params.reviewId)
-    if (review){
+    if (review) {
       const hauntId = review.hauntId;
       console.log('comparison>>>>>>', req.user.id, review.userId)
-      if (req.user.id === review.userId){
+      if (req.user.id === review.userId) {
         await review.destroy()
-        res.redirect(303, `/api/haunts/${hauntId}`);
+        res.json({status: 200})
       } else {
         next({
           title: 'Forbidden',
@@ -138,7 +146,7 @@ router.delete('/:reviewId', requireAuth, async(req,res,next) => {
         status: 404
       })
     }
-  } catch(err){
+  } catch (err) {
     next(err)
   }
 })

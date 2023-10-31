@@ -63,10 +63,10 @@ const validateHaunt = [
   check('price')
     .exists({ checkFalsy: true })
     .withMessage('Please include a price.'),
-    // .isInt({
-    //   min: 1
-    // })
-    // .withMessage('You cannot list a haunt for free.'),
+  // .isInt({
+  //   min: 1
+  // })
+  // .withMessage('You cannot list a haunt for free.'),
   handleValidationErrors
 ];
 
@@ -76,18 +76,10 @@ router.get('/', async (req, res, next) => {
     const haunts = await Haunt.findAll({
       include: [
         {
-          model: Review,
-          attributes: ['id', 'body', 'updatedAt'],
-          include: {
-            model: User,
-            attributes: ['id', 'first_name']
-          }
-        },
-        {
           model: User,
           attributes: ['id', 'first_name'],
           required: true,
-        },{
+        }, {
           model: Image,
           required: true,
           attributes: ['id', 'url', 'hauntId']
@@ -110,21 +102,10 @@ router.get('/:hauntId', async (req, res, next) => {
     const haunt = await Haunt.findByPk(req.params.hauntId, {
       include: [
         {
-          model: Review,
-          attributes: ['id', 'body', 'updatedAt'],
-          include: {
-            model: User,
-            attributes: ['id', 'first_name']
-          },
-          order: [
-            ['updatedAt', 'DESC']
-          ]
-        },
-        {
           model: User,
           attributes: ['first_name'],
           required: true,
-        },{
+        }, {
           model: Image,
           required: true,
           attributes: ['id', 'url', 'hauntId']
